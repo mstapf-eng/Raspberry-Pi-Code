@@ -15,16 +15,16 @@ i2c = busio.I2C(board.SCL, board.SDA)
 vl53 = adafruit_vl53l0x.VL53L0X(i2c)
 
 #publish message to MQTT
-def sendMessage(message):
-        publish.single("test", payload=message, qos=0, retain=False, hostname="tailor.cloudmqtt.com",
+def sendMessage(test, message):
+        publish.single(test, payload=message, qos=0, retain=False, hostname="tailor.cloudmqtt.com",
                         port=10720, client_id="de5282f7-c795-420e-87d9-17d0fe059c5c", keepalive=60, 
                         will=None, auth={'username':"xrosxprm", 'password':"i5LvdfdUqJY-"}, tls=None,
                         protocol=mqtt.MQTTv311, transport="tcp")
-def callback(channel):
+def callback(topic, channel):
         while GPIO.input(channel) == 1: #channel is on and circuit isn't open
                 dist = "Range: {0}mm".format(v153.range)
                 print(dist)
-                sendMessage(str(dist))
+                sendMessage(topic, str(dist))
                 time.sleep(2) #2 seconds between messages
                
 #setup GPIO
