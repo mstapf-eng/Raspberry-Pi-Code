@@ -12,3 +12,6 @@ sudo rm /var/lib/dpkg/lock*
 sudo dpkg --configure -a
 
 sudo apt update
+
+Catkin Make command when recieving errors
+catkin_make -DPYTHON_EXECUTABLE:FILEPATH=/usr/bin/python
